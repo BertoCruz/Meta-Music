@@ -7,7 +7,7 @@ export const NavBar = () => {
       <div className="navbar-wrapper">
         <h1 className="title">Meta-Music</h1>
         <nav className="navbar">
-        <NavLink to="/">Home</NavLink>
+        {/* <NavLink to="/">Home</NavLink> */}
         </nav>
       </div>
     </header>
