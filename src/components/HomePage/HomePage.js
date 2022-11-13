@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { countryCodes } from "../../Data/CountryCodes";
 import "./HomePage.css";
 
 export class HomePage extends Component {
@@ -9,24 +10,29 @@ export class HomePage extends Component {
       album: "",
       track: "",
       label: "",
+      country: "",
     };
   }
 
   handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
-  }
+  };
 
   submitSearch = (event) => {
     event.preventDefault();
-    console.log(this.state)
-    this.clearInputs()
-  }
+    console.log(this.state);
+    this.clearInputs();
+  };
 
   clearInputs = () => {
-    this.setState({bandArtist: "", album: "", track: "", label: ""})
-  }
+    this.setState({ bandArtist: "", album: "", track: "", label: "", country: "" });
+  };
 
   render() {
+    const countryOptions = countryCodes.map(country => {
+      return ( <option value={country.Code}>{country.Name}</option>)
+    })
+
     return (
       <div className="home-container">
         <div className="description-search-container">
@@ -48,7 +54,16 @@ export class HomePage extends Component {
               value={this.state.bandArtist}
               onChange={(event) => this.handleChange(event)}
             />
-            <input
+            <select
+              className="selector"
+              name="country"
+              value={this.state.country}
+              onChange={(event) => this.handleChange(event)}
+            >
+              <option value="">Country of origin</option>
+              {countryOptions}
+            </select>
+            {/* <input
               type="text"
               placeholder="Album"
               name="album"
@@ -68,7 +83,7 @@ export class HomePage extends Component {
               name="label"
               value={this.state.label}
               onChange={(event) => this.handleChange(event)}
-            />
+            /> */}
             <button onClick={(event) => this.submitSearch(event)}>Submit</button>
           </form>
         </div>
