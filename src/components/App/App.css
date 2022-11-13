@@ -3,13 +3,12 @@
 }
 
 header {
-    border: 1px solid red;
+    /* border: 1px solid red; */
     display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;
     max-width: 100%;
-    /* min-height: 25vh; */
     padding: 2rem;
     z-index: 5;
 }
@@ -22,7 +21,7 @@ header {
     display: flex;
     flex-direction: column;
     width: 100rem;
-    border: 1px solid purple;
+    /* border: 1px solid purple; */
 }
 
 /* .navbar {
@@ -32,7 +31,7 @@ header {
 } */
 
 main {
-    border: 1px solid red;
+    /* border: 1px solid red; */
     display: flex;
     align-items: center;
     justify-content: center;
