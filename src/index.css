@@ -24,11 +24,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-image: linear-gradient(32deg, #a8caba 23%, #9face6);
+  /* background-image: linear-gradient(32deg, #595096 23%,#8975FA, #F98BFF, #9face6, #9EE9EF); */
   /* background-image: linear-gradient(to right, #74ebd5 0%, #9face6 100%); */
 }
 
+header {
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
 }

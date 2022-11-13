@@ -1,14 +1,23 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
+import React, { Component } from 'react';
+import { Route, NavLink, Switch } from "react-router-dom";
+import { NavBar } from '../NavBar/NavBar';
 import './App.css';
 
-function App() {
+class App extends Component {
+
+render() {
   return (
     <main>
-      <div>
-
-      </div>
+      <NavBar></NavBar>
+      <Switch>
+        <Route>
+          <MetaDescription />
+        </Route>
+      </Switch>
     </main>
   );
+}
 }
 
 export default App;
