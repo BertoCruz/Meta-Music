@@ -45,3 +45,31 @@ p {
 input {
   border-radius: 5px;
 }
+
+.suggestion-container {
+  align-items: center;
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0;
+  width: 100%;
+}
+
+.artists-suggestions {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 2rem;
+  max-height: 15rem;
+  width: 60%;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+li {
+  cursor: pointer;
+  list-style-type: none;
+  margin-left: 1rem;
+}

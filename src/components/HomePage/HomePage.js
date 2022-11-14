@@ -1,32 +1,67 @@
 import React, { Component } from "react";
+import { countryCodes } from "../../Data/CountryCodes";
 import "./HomePage.css";
+import { fetchSearch } from "../../api-calls";
+import { artistData } from "../../Data/mockArtistDataset";
 
 export class HomePage extends Component {
   constructor() {
     super();
     this.state = {
-      bandArtist: "",
-      album: "",
-      track: "",
-      label: "",
+      artist: "",
+      country: "",
+      searchResult: [],
     };
   }
 
   handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
-  }
+  };
 
   submitSearch = (event) => {
     event.preventDefault();
-    console.log(this.state)
-    this.clearInputs()
-  }
+    const convertToQuery = this.state.artist.split(" ").join("+");
+
+    fetchSearch(this.state.artist, this.state.country).then((data) => {
+      if (data.artists.length > 1) {
+        this.setState({ searchResult: data.artists });
+      } else {
+        this.props.handleArtistID(data.artists[0].id);
+      }
+      this.clearInputs();
+    });
+  };
 
   clearInputs = () => {
-    this.setState({bandArtist: "", album: "", track: "", label: ""})
-  }
+    this.setState({ artist: "", country: "" });
+  };
+
+  createArtistsList = () => {
+    const listedArtists = this.state.searchResult.map((artist, index) => {
+      if (artist.score >= 70 && artist["life-span"].begin) {
+        return (
+          <li key={index} onClick={() => this.props.handleArtistID(artist.id)}>
+            {artist.name}: from {artist["life-span"].begin} -{" "}
+            {artist["life-span"].end ? artist["life-span"].end : "present"}
+          </li>
+        );
+      }
+    });
+    console.log(this.state.searchResult);
+    return listedArtists;
+  };
 
   render() {
+    const countryOptions = countryCodes.map((country, index) => {
+      return (
+        <option value={country.Code} key={index}>
+          {country.Name}
+        </option>
+      );
+    });
+
+    // console.log(artistData)
+
     return (
       <div className="home-container">
         <div className="description-search-container">
@@ -44,32 +79,28 @@ export class HomePage extends Component {
             <input
               type="text"
               placeholder="Artist, band or group"
-              name="bandArtist"
-              value={this.state.bandArtist}
+              name="artist"
+              value={this.state.artist}
               onChange={(event) => this.handleChange(event)}
             />
-            <input
-              type="text"
-              placeholder="Album"
-              name="album"
-              value={this.state.album}
+            <select
+              className="selector"
+              name="country"
+              value={this.state.country}
               onChange={(event) => this.handleChange(event)}
-            />
-            <input
-              type="text"
-              placeholder="Track"
-              name="track"
-              value={this.state.track}
-              onChange={(event) => this.handleChange(event)}
-            />
-            <input
-              type="text"
-              placeholder="Label"
-              name="label"
-              value={this.state.label}
-              onChange={(event) => this.handleChange(event)}
-            />
+            >
+              <option value="">Country of origin</option>
+              {countryOptions}
+            </select>
             <button onClick={(event) => this.submitSearch(event)}>Submit</button>
+            {this.state.searchResult.length > 0 && (
+              <div className="suggestion-container">
+                <p>Which one?</p>
+                <div className="artists-suggestions">
+                  {this.createArtistsList()}
+                </div>
+              </div>
+            )}
           </form>
         </div>
       </div>
