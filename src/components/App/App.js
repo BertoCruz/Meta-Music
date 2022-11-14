@@ -6,6 +6,7 @@ import { NavBar } from '../NavBar/NavBar';
 import './App.css';
 import { fetchLookUp } from '../../api-calls';
 
+
 class App extends Component {
   constructor() {
     super();
