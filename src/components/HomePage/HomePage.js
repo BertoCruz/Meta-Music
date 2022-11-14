@@ -1,16 +1,18 @@
 import React, { Component } from "react";
 import { countryCodes } from "../../Data/CountryCodes";
 import "./HomePage.css";
+import { fetchSearch } from "../../api-calls";
 
 export class HomePage extends Component {
   constructor() {
     super();
     this.state = {
-      bandArtist: "",
-      album: "",
-      track: "",
-      label: "",
+      artist: "",
+      // album: "",
+      // track: "",
+      // label: "",
       country: "",
+      searchResult: []
     };
   }
 
@@ -20,17 +22,26 @@ export class HomePage extends Component {
 
   submitSearch = (event) => {
     event.preventDefault();
-    console.log(this.state);
-    this.clearInputs();
+    const convertToQuery = this.state.artist.split(" ").join("+")
+
+    fetchSearch(this.state.artist, this.state.country)
+    .then(data => {
+      if (data.artists.length > 1) {
+        this.setState({searchResult: data.artists})
+      } else { 
+        this.props.handleArtistID(data.artists[0].id)
+      }
+      this.clearInputs();
+    })
   };
 
   clearInputs = () => {
-    this.setState({ bandArtist: "", album: "", track: "", label: "", country: "" });
+    this.setState({ artist: "", country: "" });
   };
 
   render() {
-    const countryOptions = countryCodes.map(country => {
-      return ( <option value={country.Code}>{country.Name}</option>)
+    const countryOptions = countryCodes.map((country, index) => {
+      return ( <option value={country.Code} key={index}>{country.Name}</option>)
     })
 
     return (
@@ -50,8 +61,8 @@ export class HomePage extends Component {
             <input
               type="text"
               placeholder="Artist, band or group"
-              name="bandArtist"
-              value={this.state.bandArtist}
+              name="artist"
+              value={this.state.artist}
               onChange={(event) => this.handleChange(event)}
             />
             <select
